@@ -1,0 +1,25 @@
+{
+  "name": "Block",
+  "version": "1.0.0",
+  "description": "Simpmle harmonic motion, spring/block simulation",
+  "main": "src/index",
+  "author": "Andres Zapata",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "prettier": "prettier --write 'src/**/*'",
+    "lint": "eslint . --ext .js,.jsx",
+    "lint:fix": "eslint . --ext .js,.jsx --fix",
+    "dev": "webpack-dev-server --mode=development --open --hot"
+  },
+  "devDependencies": {
+    "eslint": "^5.4.0",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.14.2"
+  },
+  "dependencies": {
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  }
+}
