@@ -1,6 +1,13 @@
 import React, { Component } from "react"
 import { func } from "prop-types"
+import fromCharCode from "./helpers"
 import withContext from "Components/ContextProvider"
+
+const controlButtons = [
+  { name: "stop", content: "9724" },
+  { name: "pause", content: "10073#2" },
+  { name: "play", content: "9658" }
+]
 
 class Controls extends Component {
   state = {
@@ -18,6 +25,13 @@ class Controls extends Component {
     const numberValue = parseFloat(value)
     if (!Number.isFinite(numberValue) && value.length) return
     updateInputValue(name, Math.abs(numberValue))
+  }
+
+  onClickCanvasControl = ev => {
+    ev.preventDefault()
+    const { name } = ev.target
+    const { dispatchCanvasControl } = this.props
+    dispatchCanvasControl(name)
   }
 
   render() {
@@ -46,9 +60,11 @@ class Controls extends Component {
             placeholder="Omega"
           />
         </label>
-        <button>&#9724;</button>
-        <button>&#10073;&#10073;</button>
-        <button>&#9658;</button>
+        {controlButtons.map(({ name, content }) => (
+          <button key={name} name={name} onClick={this.onClickCanvasControl}>
+            {fromCharCode(content)}
+          </button>
+        ))}
       </form>
     )
   }
