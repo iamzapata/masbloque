@@ -5,14 +5,18 @@ const { Provider, Consumer } = createContext()
 
 class ContextProvider extends Component {
   state = {
-    amplitude: 200,
-    omega: 1
+    amplitude: 100,
+    omega: 0
   }
 
   updateInputValue = (input, value) => {
     this.setState({
       [input]: value
     })
+  }
+
+  dispatchCanvasControl = actionName => {
+    console.log(actionName)
   }
 
   render() {
@@ -22,7 +26,8 @@ class ContextProvider extends Component {
       <Provider
         value={{
           inputs: { amplitude, omega },
-          updateInputValue: this.updateInputValue
+          updateInputValue: this.updateInputValue,
+          dispatchCanvasControl: this.dispatchCanvasControl
         }}
       >
         {children}
