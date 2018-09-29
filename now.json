@@ -1,0 +1,17 @@
+{
+  type: "static",
+  files: [
+    "./client"
+  ],
+  alias: "mas-bloque.azapata.io",
+  name: "mas-bloque",
+  static: {
+    public: "./client",
+    rewrites: [
+      {
+        source: "**",
+        destination: "/index.html"
+      }
+    ]
+  }
+}
