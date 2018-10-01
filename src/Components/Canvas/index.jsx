@@ -166,11 +166,17 @@ class Canvas extends PureComponent {
     this.drawFloor(context, canvasHeight, canvasWidth)
 
     const {
-      inputs: { amplitude, omega }
+      inputs: { amplitude, omega, isPlaying }
     } = this.props
+
     if (this.t > this.limit) this.t = 1
     const x = amplitude * Math.cos(omega * this.t) + amplitude
-    this.t += this.delta
+    if (isPlaying) {
+      this.t += this.delta
+    } else {
+      this.t = this.t
+    }
+
     this.drawBox(x, -2)
     this.displaySpring(x)
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { func } from "prop-types"
-import fromCharCode from "./helpers"
 import withContext from "Components/ContextProvider"
+import fromCharCode from "./helpers"
 
 const controlButtons = [
   { name: "stop", content: "9724" },
@@ -9,10 +9,14 @@ const controlButtons = [
   { name: "play", content: "9658" }
 ]
 
+const shouldBeDisabled = (name, isPlaying) =>
+  (name === "play" && isPlaying) || (name === "pause" && !isPlaying)
+
 class Controls extends Component {
   state = {
     amplitude: "",
-    omega: ""
+    omega: "",
+    isPlaying: false
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -35,7 +39,7 @@ class Controls extends Component {
   }
 
   render() {
-    const { omega, amplitude } = this.state
+    const { omega, amplitude, isPlaying } = this.state
     return (
       <form>
         <label htmlFor="amplitude">
@@ -61,7 +65,13 @@ class Controls extends Component {
           />
         </label>
         {controlButtons.map(({ name, content }) => (
-          <button key={name} name={name} onClick={this.onClickCanvasControl}>
+          <button
+            key={name}
+            name={name}
+            type="button"
+            disabled={shouldBeDisabled(name, isPlaying)}
+            onClick={this.onClickCanvasControl}
+          >
             {fromCharCode(content)}
           </button>
         ))}
@@ -71,6 +81,7 @@ class Controls extends Component {
 }
 
 Controls.propTypes = {
-  updateInputValue: func.isRequired
+  updateInputValue: func.isRequired,
+  dispatchCanvasControl: func.isRequired
 }
 export default withContext(Controls)
