@@ -23,20 +23,28 @@
     "babel-plugin-transform-class-properties": "^7.0.0-beta.3",
     "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
     "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^1.0.0",
     "eslint": "^5.4.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.3",
+    "node-sass": "^4.9.3",
+    "postcss-loader": "^3.0.0",
     "prettier": "^1.14.2",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.0",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.7"
   },
   "dependencies": {
+    "autoprefixer": "^9.1.5",
     "micro": "^9.3.3",
     "prop-types": "^15.6.2",
+    "rc-slider": "^8.6.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   }
