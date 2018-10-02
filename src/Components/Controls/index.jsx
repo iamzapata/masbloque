@@ -2,13 +2,12 @@ import React, { Component } from "react"
 import { func } from "prop-types"
 import withContext from "Components/ContextProvider"
 import Slider from "rc-slider"
-import fromCharCode from "./helpers"
 import "rc-slider/assets/index.css"
 
 const controlButtons = [
-  { name: "stop", content: "9724" },
-  { name: "pause", content: "10073#2" },
-  { name: "play", content: "9658" }
+  { name: "stop", icon: "fa fa-stop-circle" },
+  { name: "pause", icon: "fa fa-pause-circle-o" },
+  { name: "play", icon: "fa fa-play-circle-o" }
 ]
 
 const shouldBeDisabled = (name, isPlaying) =>
@@ -35,7 +34,7 @@ class Controls extends Component {
 
   onClickCanvasControl = ev => {
     ev.preventDefault()
-    const { name } = ev.target
+    const { name } = ev.currentTarget
     const { dispatchCanvasControl } = this.props
     dispatchCanvasControl(name)
   }
@@ -44,52 +43,70 @@ class Controls extends Component {
     const { omega, amplitude, isPlaying } = this.state
     return (
       <form>
-        <label htmlFor="amplitude">
-          Amplitud
-          <input
-            id="amplitude"
-            onChange={ev => this.updateInputValue(ev)}
-            type="number"
-            name="amplitude"
-            value={amplitude}
-            placeholder="Amplitud"
-          />
-          <Slider
-            name="amplitude"
-            onChange={value =>
-              this.updateInputValue({ target: { value, name: "amplitude" } })
-            }
-            value={amplitude}
-          />
-        </label>
-        <label htmlFor="omega">
-          Omega
-          <input
-            id="omega"
-            onChange={ev => this.updateInputValue(ev)}
-            type="number"
-            name="omega"
-            value={omega}
-            placeholder="Omega"
-          />
-          <Slider
-            name="amplitude"
-            onChange={value =>
-              this.updateInputValue({ target: { value, name: "omega" } })
-            }
-            value={amplitude}
-          />
-        </label>
-        {controlButtons.map(({ name, content }) => (
-          <button
-            key={name}
-            name={name}
-            type="button"
-            disabled={shouldBeDisabled(name, isPlaying)}
-            onClick={this.onClickCanvasControl}
-          >
-            {fromCharCode(content)}
-          </button>
+        <div className="field">
+          <label className="label" htmlFor="amplitude">
+            Amplitud
+          </label>
+          <div className="control">
+            <input
+              className="input"
+              id="amplitude"
+              onChange={ev => this.updateInputValue(ev)}
+              type="number"
+              name="amplitude"
+              value={amplitude}
+              placeholder="Amplitud"
+            />
+            <Slider
+              name="amplitude"
+              min={0}
+              max={450}
+              onChange={value =>
+                this.updateInputValue({ target: { value, name: "amplitude" } })
+              }
+              value={amplitude}
+            />
+          </div>
+        </div>
+        <div className="field">
+          <label className="label" htmlFor="omega">
+            Omega
+          </label>
+          <div className="control">
+            <input
+              id="omega"
+              className="input"
+              onChange={ev => this.updateInputValue(ev)}
+              type="number"
+              name="omega"
+              value={omega}
+              placeholder="Omega"
+            />
+            <Slider
+              name="amplitude"
+              min={0}
+              max={10}
+              onChange={value =>
+                this.updateInputValue({ target: { value, name: "omega" } })
+              }
+              value={omega}
+            />
+          </div>
+        </div>
+        {controlButtons.map(({ name, icon }) => (
+          <div className="control" key={name}>
+            <button
+              name={name}
+              type="button"
+              className="button"
+              onClick={ev => this.onClickCanvasControl(ev)}
+              disabled={shouldBeDisabled(name, isPlaying)}
+            >
+              <span className="icon is-small">
+                <i className={icon} />
+              </span>
+            </button>
+          </div>
         ))}
       </form>
     )

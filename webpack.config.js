@@ -42,6 +42,18 @@ module.exports = {
           { loader: "postcss-loader" },
           { loader: "sass-loader" }
         ]
+      },
+      {
+        test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "fonts/"
+            }
+          }
+        ]
       }
     ]
   },
@@ -49,7 +61,8 @@ module.exports = {
     extensions: [".js", ".jsx"],
     modules: ["node_modules"],
     alias: {
-      Components: path.resolve(__dirname, "src/Components")
+      Components: path.resolve(__dirname, "src/Components"),
+      Styles: path.resolve(__dirname, "src/styles")
     }
   },
   plugins: [
