@@ -1,7 +1,9 @@
 import React, { Component } from "react"
 import { func } from "prop-types"
 import withContext from "Components/ContextProvider"
+import Slider from "rc-slider"
 import fromCharCode from "./helpers"
+import "rc-slider/assets/index.css"
 
 const controlButtons = [
   { name: "stop", content: "9724" },
@@ -52,6 +54,13 @@ class Controls extends Component {
             value={amplitude}
             placeholder="Amplitud"
           />
+          <Slider
+            name="amplitude"
+            onChange={value =>
+              this.updateInputValue({ target: { value, name: "amplitude" } })
+            }
+            value={amplitude}
+          />
         </label>
         <label htmlFor="omega">
           Omega
@@ -62,6 +71,13 @@ class Controls extends Component {
             name="omega"
             value={omega}
             placeholder="Omega"
+          />
+          <Slider
+            name="amplitude"
+            onChange={value =>
+              this.updateInputValue({ target: { value, name: "omega" } })
+            }
+            value={amplitude}
           />
         </label>
         {controlButtons.map(({ name, content }) => (
