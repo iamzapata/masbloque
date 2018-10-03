@@ -44,10 +44,10 @@ class Controls extends Component {
     return (
       <form>
         <div className="field">
-          <label className="label" htmlFor="amplitude">
-            Amplitud
-          </label>
           <div className="control">
+            <label className="label" htmlFor="amplitude">
+              Amplitud
+            </label>
             <input
               className="input"
               id="amplitude"
@@ -69,10 +69,10 @@ class Controls extends Component {
           </div>
         </div>
         <div className="field">
-          <label className="label" htmlFor="omega">
-            Omega
-          </label>
           <div className="control">
+            <label className="label" htmlFor="omega">
+              Omega
+            </label>
             <input
               id="omega"
               className="input"
