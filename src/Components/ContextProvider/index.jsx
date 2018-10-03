@@ -17,7 +17,6 @@ class ContextProvider extends Component {
   }
 
   dispatchCanvasControl = actionName => {
-    console.log({ actionName })
     return {
       stop: () => this.setState({ amplitude: 100, omega: 1, isPlaying: false }),
       pause: () => this.setState({ isPlaying: false }),
