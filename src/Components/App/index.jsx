@@ -7,7 +7,7 @@ import "Styles/index.scss"
 const App = () => (
   <div className="App">
     <ContextProvider>
-      <Canvas width={1000} height={300} />
+      <Canvas width={1000} height={340} />
       <Controls />
     </ContextProvider>
   </div>
