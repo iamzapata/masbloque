@@ -5,7 +5,7 @@ const { Provider, Consumer } = createContext()
 
 class ContextProvider extends Component {
   state = {
-    amplitude: 100,
+    amplitude: 0,
     omega: 1,
     isPlaying: false
   }
@@ -18,7 +18,7 @@ class ContextProvider extends Component {
 
   dispatchCanvasControl = actionName => {
     return {
-      stop: () => this.setState({ amplitude: 100, omega: 1, isPlaying: false }),
+      stop: () => this.setState({ amplitude: 0, omega: 1, isPlaying: false }),
       pause: () => this.setState({ isPlaying: false }),
       play: () => this.setState({ isPlaying: true })
     }[actionName]()

@@ -9,6 +9,7 @@ class Canvas extends PureComponent {
     this.limit = 360
     this.delta = 0.01
     this.boxDimension = 80
+    this.springCompressedWidth = 150
     this.canvas = React.createRef()
   }
 
@@ -100,7 +101,7 @@ class Canvas extends PureComponent {
       initialX: 1,
       initialY: canvasHeight / 2 - 40,
       currentXPosition: x,
-      windings: 14,
+      windings: 15,
       windingHeight: 15,
       offsetPadding: 10,
       backSideColor: "rgba(0, 0, 0, 0.9)",
@@ -170,14 +171,21 @@ class Canvas extends PureComponent {
     } = this.props
 
     if (this.t > this.limit) this.t = 1
-    const x = amplitude * Math.cos(omega * this.t) + amplitude
+
+    const x =
+      amplitude * Math.cos(omega * this.t) +
+      amplitude +
+      this.springCompressedWidth
+
+    const t = this.t
+    console.log({ t, x })
     if (isPlaying) {
       this.t += this.delta
     } else {
       this.t = this.t
     }
 
-    this.drawBox(x, -2)
+    this.drawBox(x, -1)
     this.displaySpring(x)
 
     //this.canvasContext.restore();
