@@ -42,7 +42,7 @@ class Controls extends Component {
   render() {
     const { omega, amplitude, isPlaying } = this.state
     return (
-      <form>
+      <form className="container">
         <div className="field">
           <div className="control">
             <label className="label" htmlFor="amplitude">
