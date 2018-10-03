@@ -14,7 +14,7 @@ class Canvas extends PureComponent {
 
   componentDidMount() {
     this.canvasContext = this.canvas.current.getContext("2d")
-    requestAnimationFrame(this.draw)
+    this.draw()
   }
 
   drawSpring = ({
@@ -181,7 +181,7 @@ class Canvas extends PureComponent {
     this.displaySpring(x)
 
     //this.canvasContext.restore();
-    window.requestAnimationFrame(this.draw)
+    requestAnimationFrame(this.draw)
   }
 
   render() {
