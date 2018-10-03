@@ -3,19 +3,56 @@ import withContext from "Components/ContextProvider"
 import { number, shape } from "prop-types"
 
 class Canvas extends PureComponent {
+  state = {
+    isMouseDown: false
+  }
   constructor(props) {
     super(props)
     this.t = 1
     this.limit = 360
-    this.delta = 0.01
+    this.delta = 0.1
     this.boxDimension = 80
-    this.springCompressedWidth = 150
+    this.springCompressedWidth = 160
     this.canvas = React.createRef()
   }
 
   componentDidMount() {
     this.canvasContext = this.canvas.current.getContext("2d")
     this.draw()
+  }
+
+  onMouseDown = () => {
+    this.setState({ isMouseDown: true })
+  }
+
+  onMouseUp = () => {
+    this.setState({ isMouseDown: false })
+  }
+
+  onMouseMove = ev => {
+    const { clientX } = ev
+    const { isMouseDown } = this.state
+    const rect = this.canvas.current.getBoundingClientRect()
+    const coordX = clientX - rect.left
+    if (isMouseDown) {
+      this.drawBox(coordX - this.boxDimension / 2, 100)
+    }
+  }
+
+  drawHelpGrid = () => {
+    const { width: canvasWidth, height: canvasHeight } = this.props
+    for (let x = 0; x <= canvasWidth; x += this.boxDimension) {
+      this.canvasContext.moveTo(0.5 + x, 0)
+      this.canvasContext.lineTo(0.5 + x, canvasHeight - 20)
+    }
+
+    for (let x = 0; x <= canvasHeight; x += this.boxDimension) {
+      this.canvasContext.moveTo(0, 0.5 + x)
+      this.canvasContext.lineTo(canvasWidth - 40, 0.5 + x)
+    }
+    this.canvasContext.lineWidth = 1
+    this.canvasContext.strokeStyle = "black"
+    this.canvasContext.stroke()
   }
 
   drawSpring = ({
@@ -57,7 +94,7 @@ class Canvas extends PureComponent {
 
     // finishes off backside drawing, including black -line
     this.canvasContext.lineTo(currentXPosition, initialY)
-    this.canvasContext.lineTo(currentXPosition + offsetPadding - 2, initialY)
+    this.canvasContext.lineTo(currentXPosition + offsetPadding, initialY)
     this.canvasContext.stroke()
 
     this.canvasContext.strokeStyle = frontSideColor
@@ -103,7 +140,7 @@ class Canvas extends PureComponent {
       currentXPosition: x,
       windings: 15,
       windingHeight: 15,
-      offsetPadding: 10,
+      offsetPadding: 5,
       backSideColor: "rgba(0, 0, 0, 0.9)",
       frontSideColor: "gray",
       lineWidth: 9
@@ -111,17 +148,11 @@ class Canvas extends PureComponent {
   }
 
   drawBox = (x, yInitial) => {
-    const { width: canvasWidth, height: canvasHeight } = this.props
+    const { height: canvasHeight } = this.props
     this.canvasContext.fillStyle = "rgba(255, 0, 0, 1)"
     const y = yInitial + canvasHeight / 2 - this.boxDimension
-    this.canvasContext.clearRect(
-      5,
-      canvasHeight / 2 - this.boxDimension - 5,
-      canvasWidth,
-      this.boxDimension + 2
-    )
 
-    this.draGreenBackground(x, y, this.boxDimension)
+    //this.draGreenBackground(x, y, this.boxDimension)
 
     this.canvasContext.strokeStyle = "black"
     this.canvasContext.lineWidth = 1
@@ -134,10 +165,10 @@ class Canvas extends PureComponent {
     const { width: canvasWidth, height: canvasHeight } = this.props
     this.canvasContext.fillStyle = "rgba(0, 255, 0, 1)"
     this.canvasContext.fillRect(
-      3,
+      1,
       canvasHeight / 2 - this.boxDimension,
-      canvasWidth,
-      this.boxDimension + 2
+      canvasWidth - this.boxDimension / 2,
+      this.boxDimension
     )
   }
 
@@ -162,6 +193,7 @@ class Canvas extends PureComponent {
   draw = () => {
     const { width: canvasWidth, height: canvasHeight } = this.props
     const context = this.canvasContext
+    const currentT = this.t
 
     this.drawWall(context, canvasHeight)
     this.drawFloor(context, canvasHeight, canvasWidth)
@@ -177,24 +209,43 @@ class Canvas extends PureComponent {
       amplitude +
       this.springCompressedWidth
 
-    const t = this.t
-    console.log({ t, x })
     if (isPlaying) {
       this.t += this.delta
     } else {
-      this.t = this.t
+      this.t = currentT
     }
 
+    this.clearPath()
     this.drawBox(x, -1)
     this.displaySpring(x)
+    this.drawHelpGrid()
 
-    //this.canvasContext.restore();
+    this.canvasContext.restore()
     requestAnimationFrame(this.draw)
+  }
+
+  clearPath() {
+    const { width: canvasWidth, height: canvasHeight } = this.props
+    this.canvasContext.clearRect(
+      5,
+      canvasHeight / 2 - this.boxDimension - 5,
+      canvasWidth,
+      this.boxDimension
+    )
   }
 
   render() {
     const { width, height } = this.props
-    return <canvas width={width} height={height} ref={this.canvas} />
+    return (
+      <canvas
+        width={width}
+        height={height}
+        ref={this.canvas}
+        onMouseDown={() => this.onMouseDown()}
+        onMouseUp={() => this.onMouseUp()}
+        onMouseMove={ev => this.onMouseMove(ev)}
+      />
+    )
   }
 }
 

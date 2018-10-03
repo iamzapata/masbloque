@@ -5,7 +5,7 @@ const { Provider, Consumer } = createContext()
 
 class ContextProvider extends Component {
   state = {
-    amplitude: 0,
+    amplitude: 100,
     omega: 1,
     isPlaying: false
   }
