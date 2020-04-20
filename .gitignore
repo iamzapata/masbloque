@@ -3,3 +3,5 @@ client/
 yarn.lock
 yarn-error.log
 node_modules/
+.now
+now.json

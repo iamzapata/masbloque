@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const devMode = process.env.NODE_ENV !== "production"
 module.exports = {
   devServer: {
-    contentBase: path.join(__dirname, "client"),
+    contentBase: path.join(__dirname, "public"),
     index: "index.html",
     overlay: {
       warnings: true,
@@ -16,7 +16,7 @@ module.exports = {
   },
   entry: { main: "./src/index.js" },
   output: {
-    path: path.resolve(__dirname, "client"),
+    path: path.resolve(__dirname, "public"),
     filename: "bundle.js"
   },
 
@@ -76,6 +76,6 @@ module.exports = {
       filename: devMode ? "[name].css" : "[name].[hash].css",
       chunkFilename: devMode ? "[name].css" : "[name].[hash].css"
     }),
-    devMode ? () => null : new CleanWebpackPlugin("client")
+    devMode ? () => null : new CleanWebpackPlugin("public")
   ]
 }
