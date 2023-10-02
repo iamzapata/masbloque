@@ -44,7 +44,7 @@
     "webpack-dev-server": "^3.1.7"
   },
   "dependencies": {
-    "autoprefixer": "^9.1.5",
+    "autoprefixer": "^10.0.0",
     "micro": "^9.3.3",
     "prop-types": "^15.6.2",
     "rc-slider": "^8.6.3",
